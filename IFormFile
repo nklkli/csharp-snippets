@@ -1,0 +1,15 @@
+
+    var result = new StringBuilder();
+    using (var reader = new StreamReader(Upload.OpenReadStream()))
+    {
+        while (reader.Peek() >= 0)
+            result.AppendLine(reader.ReadLine());
+    }
+
+
+
+    var file = Path.Combine(_environment.ContentRootPath, "uploads", Upload.FileName);
+    using (var fileStream = new FileStream(file, FileMode.Create))
+    {
+        await Upload.CopyToAsync(fileStream);
+    }
